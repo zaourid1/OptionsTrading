@@ -25,10 +25,12 @@ def calculate_levels(
 
     prices = {'pivot':session_open}
     for m in multipliers:
-        prices[f"upper_{m}"] = session_open + (previous_daily_atr * m)
-        prices[f"lower_{m}"] = session_open - (previous_daily_atr * m)
+        if m <= 0:
+            raise ValueError("multipliers cannot be negative or zero")
+        else:
+            prices[f"upper_{m}"] = session_open + (previous_daily_atr * m)
+            prices[f"lower_{m}"] = session_open - (previous_daily_atr * m)
 
-    
     return prices
 
 if __name__ == "__main__":
